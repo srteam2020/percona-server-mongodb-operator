@@ -266,7 +266,6 @@ pipeline {
                 stage('E2E Basic Tests') {
                     steps {
                         CreateCluster('basic')
-                        runTest('default-cr', 'basic')
                         runTest('one-pod', 'basic')
                         runTest('monitoring-2-0', 'basic')
                         runTest('arbiter', 'basic')
