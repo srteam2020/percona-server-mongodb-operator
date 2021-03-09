@@ -122,6 +122,7 @@ func (r *ReconcilePerconaServerMongoDB) ensureVersion(cr *api.PerconaServerMongo
 		PMMVersion:    cr.Status.PMMVersion,
 		BackupVersion: cr.Status.BackupVersion,
 		CRUID:         string(cr.GetUID()),
+		Version:       cr.Version().String(),
 	}
 	if cr.Spec.Platform != nil {
 		vm.Platform = string(*cr.Spec.Platform)
@@ -200,7 +201,7 @@ func (r *ReconcilePerconaServerMongoDB) fetchVersionFromMongo(cr *api.PerconaSer
 		return nil
 	}
 
-	session, err := r.mongoClientWithRole(cr, replset.Name, replset.Expose.Enabled, pods, roleClusterAdmin)
+	session, err := r.mongoClientWithRole(cr, replset.Name, replset.Expose.Enabled, pods.Items, roleClusterAdmin)
 	if err != nil {
 		return errors.Wrap(err, "dial")
 	}
